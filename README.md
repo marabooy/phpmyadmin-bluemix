@@ -29,6 +29,9 @@ Manage your Bluemix Mysql services
 
 	```
 
+	Also has the script part which is run on deploy. if you need to run extra scripts to configure your enviroment here is the place to put it
+	More details on composer scripts [here] (https://getcomposer.org/doc/articles/scripts.md)
+
 2. The Procfile (Inherited from the heroku buildpack)
 
 	This file defines the processes required by the application
@@ -45,6 +48,11 @@ Manage your Bluemix Mysql services
 	Specifies that the web process [vendor/bin/heroku-php-apache2] and the path is [htdocs/] path is relative to the project root
 
 3. Your Manifest file
+
+4. Options.json
+
+    With this you can specify the url to download the phpmyadmin zip from this reduces the amount of bandwidth used during cf push
+    The hash value contains the md5 hash of the zip file (Just to make sure we are downloading/have downloaded the correct thing) :)
 
 
 ###Uses
