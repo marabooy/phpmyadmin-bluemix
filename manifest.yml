@@ -1,11 +1,11 @@
 ---
 applications:
 - name: phpmyadmin
-  memory: 128M 
-  instances: 1
-  host: phpmyadmin
-  domain: cfapps.io
-  path: .
-  buildpack: https://github.com/dmikusa-pivotal/cf-php-build-pack.git
-  services:
-  - mysql-db
+memory: 64M 
+instances: 1
+host: phpmyadmin-hmra
+path: .
+buildpack: https://github.com/cloudfoundry/cf-buildpack-php.git
+env:
+    CF_STAGING_TIMEOUT: 15
+    CF_STARTUP_TIMEOUT: 15

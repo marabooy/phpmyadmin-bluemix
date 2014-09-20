@@ -14,46 +14,46 @@
  * This is needed for cookie based authentication to encrypt password in
  * cookie
  */
-$cfg['blowfish_secret'] = 'N3nfij93EJjn3f8d8nfj9dzZ'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+$cfg['blowfish_secret'] = 'a8b7c6d'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+
+/* get values from VCAP */
+$vcap_services = json_decode($_ENV["VCAP_SERVICES" ]);
+$mysql_services = $vcap_services->{'mysql-5.5'};
+
+
+if (!$mysql_services){
+    die ('No MySQL services bound.');
+}
+
+
 
 /*
  * Servers configuration
  */
-$i = 0;
+for($i = 1; $i <= count($mysql_services); $i++) {
+    $db = $mysql_services[$i-1]->credentials;
+    /* Display name */
+    $cfg['Servers'][$i]['verbose'] = $mysql_services[$i-1]->name;
+    /* Authentication type */
+    $cfg['Servers'][$i]['auth_type'] = 'cookie';
+    /* Server parameters */
+    $cfg['Servers'][$i]['host'] = $db->host;
+    $cfg['Servers'][$i]['port'] = $db->port;
+    //$cfg['Servers'][$i]['host'] = '127.0.0.1';
+    $cfg['Servers'][$i]['connect_type'] = 'tcp';
+    $cfg['Servers'][$i]['compress'] = false;
+    /* Select mysql if your server does not have mysqli */
+    $cfg['Servers'][$i]['extension'] = 'mysqli';
+    $cfg['Servers'][$i]['user'] = $db->username;
+    $cfg['Servers'][$i]['password'] = $db->password;
+    $cfg['Servers'][$i]['AllowNoPasswordRoot'] = true;
+    $cfg['Servers'][$i]['AllowNoPassword'] = true;
 
-/*
- * Read MySQL service properties from _ENV['VCAP_SERVICES']
- */
-$services = json_decode($_ENV['VCAP_SERVICES'], true);
-$service = $services['cleardb'][0]; // pick the first service
-
-/*
- * First server
- */
-$i++;
-/* Authentication type */
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
-/* Server parameters */
-$cfg['Servers'][$i]['host'] = $service['credentials']['hostname'];
-$cfg['Servers'][$i]['port'] = $service['credentials']['port'];
-$cfg['Servers'][$i]['connect_type'] = 'tcp';
-$cfg['Servers'][$i]['compress'] = false;
-/* Select mysql if your server does not have mysqli */
-$cfg['Servers'][$i]['extension'] = 'mysqli';
-$cfg['Servers'][$i]['AllowNoPassword'] = false;
+}
 
 /*
  * phpMyAdmin configuration storage settings.
  */
-
-/*
- * Read application configuration, get uri
- */
-$appCfg = json_decode($_ENV['VCAP_APPLICATION'], true);
-$scheme = ($_SERVER['HTTPS'] != '') ? 'https' : 'http';
-$cfg['PmaAbsoluteUri'] = $scheme . '://' . $appCfg['uris'][0] . "/";
-
-$cfg['LoginCookieValidity'] = 1440;
 
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
@@ -88,8 +88,8 @@ $cfg['LoginCookieValidity'] = 1440;
 /*
  * Directories for saving/loading files from server
  */
-$cfg['UploadDir'] = $_ENV['TMPDIR'];
-$cfg['SaveDir'] = $_ENV['TMPDIR'];
+$cfg['UploadDir'] = '';
+$cfg['SaveDir'] = '';
 
 /**
  * Defines whether a user should be displayed a "show all (records)"
