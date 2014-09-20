@@ -4,7 +4,6 @@ applications:
 memory: 64M 
 instances: 1
 host: phpmyadmin-mine
-path: .
 buildpack: https://github.com/cloudfoundry/cf-buildpack-php.git
 env:
     CF_STAGING_TIMEOUT: 15

@@ -52,17 +52,20 @@ Manage your Bluemix Mysql services
 4. Options.json
 
     With this you can specify the url to download the phpmyadmin zip from this reduces the amount of bandwidth used during cf push
-    The hash value contains the md5 hash of the zip file (Just to make sure we are downloading/have downloaded the correct thing) :)
+    The hash value contains the md5 hash of the zip file (Just to make sure we are downloading/have downloaded the correct thing)
 
 
 ###Uses
 1. [PHP Buildpack] (https://github.com/cloudfoundry/php-buildpack)
 2. Extensions and libraries uses the composer tool to require platform libraries/extensions. Reference found on this [page] (https://getcomposer.org/doc/02-libraries.md#platform-packages)
-3. Available extensions are currently documented [here] (https://devcenter.heroku.com/articles/php-support#extensions) 
+3. Available extensions are currently documented [here] (https://devcenter.heroku.com/articles/php-support#extensions)
+4. and Finally PHPMyadmin
 
 
 ###Notes
-This buildpack utilizes the heroku buildpack and hence the heroku php docs will also work for this 
+This buildpack utilizes the heroku buildpack and hence the heroku php docs will also work for this
+Don't foeget to customize the manifest.yml
+
 
 
 
