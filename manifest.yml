@@ -3,7 +3,7 @@ applications:
 - name: phpmyadmin
 memory: 64M 
 instances: 1
-host: phpmyadmin-hmra
+host: phpmyadmin-mine
 path: .
 buildpack: https://github.com/cloudfoundry/cf-buildpack-php.git
 env:
