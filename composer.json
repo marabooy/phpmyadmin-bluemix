@@ -2,5 +2,14 @@
     "require": {
 		"ext-mbstring":"*",
 		"ext-gd":"*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php installer.php"
+        ],
+        "post-update-cmd": [
+            "php installer.php",
+            "rm myadmin.zip"
+        ]
     }
 }
